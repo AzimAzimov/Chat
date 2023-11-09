@@ -1,16 +1,29 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "@/app/components/Input/Input";
 import Button from "@/app/components/Button/Button";
 import AuthSocialButton from "@/app/components/AuthSocialButton/AuthSocialButton";
 import { BsGithub, BsGoogle } from "react-icons/bs";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type VariantForm = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
   const [variant, setVariant] = useState<VariantForm>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.push("/users");
+      console.log("auth!!!!!!");
+    }
+  }, [session?.status, router]);
 
   const toggleVariant = useCallback(() => {
     if (variant === "LOGIN") {
@@ -35,15 +48,46 @@ const AuthForm = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
     if (variant === "REGISTER") {
-      //axios
+      axios
+        .post("/api/register", data)
+        .then(() => signIn("credentials", data))
+        .catch(() => toast.error("Ошибка при регистрации!"))
+        .finally(() => {
+          setIsLoading(false);
+          toast.success("Успешно!");
+        });
     }
     if (variant === "LOGIN") {
-      //axios
+      signIn("credentials", {
+        ...data,
+        redirect: false,
+      })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error("Ошибка при входе!");
+          }
+          if (callback?.ok && !callback?.error) {
+            toast.success("Успешно!");
+            router.push("/users");
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 
   const socialAction = (action: string) => {
     setIsLoading(true);
+    signIn(action, { redirect: false })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Ошибка при входе!");
+        }
+        if (callback?.ok && !callback?.error) {
+          toast.success("Успешно!");
+          router.push("/users");
+        }
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (

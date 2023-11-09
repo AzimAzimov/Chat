@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.scss";
 import { ReactNode } from "react";
+import ToasterContext from "@/app/context/ToasterContext";
+import AuthContext from "@/app/context/AuthContext";
 
 interface HomeProps {
   children: ReactNode;
@@ -16,7 +18,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: HomeProps) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthContext>
+          <ToasterContext />
+          {children}
+        </AuthContext>
+      </body>
     </html>
   );
 }
