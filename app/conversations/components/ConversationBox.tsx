@@ -48,7 +48,7 @@ const ConversationBox: FC<ConversationBoxProps> = ({ data, selected }) => {
       onClick={handleClick}
       className={clsx(
         `
-      w-full relative flex items-center space-x-3 rounded-lg transition cursor-pointer hover:bg-neutral-100 p-3
+      w-full relative flex items-center space-x-3 rounded-lg transition cursor-pointer hover:bg-neutral-100 p-3 mb-1
     `,
         selected ? "bg-neutral-300" : "bg-white",
       )}

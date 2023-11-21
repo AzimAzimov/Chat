@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { Message } from "@prisma/client";
 
 interface BodyProps {
-  messages: Message[];
+  initialMessages: Message[];
 }
 const Body: FC<BodyProps> = () => {
   return (

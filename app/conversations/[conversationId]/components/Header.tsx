@@ -42,7 +42,7 @@ const Header: FC<HeaderProps> = ({ conversation }) => {
         <div className={"flex flex-col"}>
           <div className={""}>{conversation.name || otherUser.name}</div>
           <div className={"text-sm font-light text-neutral-500"}>
-            {statusText}
+            {statusText}e
           </div>
         </div>
       </div>
