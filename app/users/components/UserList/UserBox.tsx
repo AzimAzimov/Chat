@@ -24,8 +24,6 @@ const UserBox: FC<UserBoxProps> = ({ data }) => {
       .finally(() => setIsLoading(false));
   }, [data, router]);
 
-  console.log("data", data);
-
   return (
     <div
       onClick={handleClick}
