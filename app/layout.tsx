@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.scss";
 import { ReactNode } from "react";
 import ToasterContext from "@/app/context/ToasterContext";
 import AuthContext from "@/app/context/AuthContext";
+import "./globals.scss";
 
 interface HomeProps {
   children: ReactNode;

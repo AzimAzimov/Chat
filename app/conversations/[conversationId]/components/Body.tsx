@@ -4,14 +4,15 @@ import { FullMessageType } from "@/app/types";
 import useConversation from "@/app/hooks/useConversation";
 import MessageBox from "@/app/conversations/[conversationId]/components/MessageBox";
 import axios from "axios";
+import { log } from "util";
 
 interface BodyProps {
   initialMessages: FullMessageType[];
 }
 const Body: FC<BodyProps> = ({ initialMessages }) => {
   const [messages, setMessages] = useState(initialMessages);
-  const bottomRef = useRef(null);
   const { conversationId } = useConversation();
+  const bottomRef = useRef(null);
 
   useEffect(() => {
     axios

@@ -29,6 +29,8 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
     data.image ? "rounded-md p-0" : "rounded-full py-2 px-3",
   );
 
+  console.log("seenList", seenList);
+
   return (
     <div className={container}>
       <div className={avatar}>
@@ -54,6 +56,11 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
             <div>{data.body}</div>
           )}
         </div>
+        {isLast && isOwn && seenList.length > 0 && (
+          <div className={"text-xs font-light text-gray-500"}>
+            {`Прочитано ${seenList}`}
+          </div>
+        )}
       </div>
     </div>
   );
