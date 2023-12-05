@@ -7,10 +7,13 @@ import { HiPhoto } from "react-icons/hi2";
 import MessageInput from "@/app/conversations/[conversationId]/components/MessageInput";
 import { HiPaperAirplane } from "react-icons/hi";
 import { CldUploadButton } from "next-cloudinary";
+import { useRouter } from "next/navigation";
 
 interface FormProps {}
 const Form: FC<FormProps> = () => {
   const { conversationId } = useConversation();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -29,7 +32,8 @@ const Form: FC<FormProps> = () => {
         ...data,
         conversationId: conversationId,
       })
-      .then(() => console.log("Сообщение отправлено!"));
+      .then(() => console.log("Сообщение отправлено!"))
+      .finally(() => router.refresh());
   };
 
   const handleUpload = (result: any) => {
@@ -60,7 +64,7 @@ const Form: FC<FormProps> = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={"flex items-center lg:gap-4 w-full"}
+        className={"flex items-center lg:gap-4 w-full gap-3"}
       >
         <MessageInput
           id={"message"}

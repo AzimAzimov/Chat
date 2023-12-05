@@ -14,7 +14,11 @@ const Avatar: FC<AvatarProps> = ({ user }) => {
           "relative inline-block rounded-full overflow-hidden h-9 w-9 md:h-11 md:w-11"
         }
       >
-        <img src={user?.image || "/images/placeholder.jpg"} alt={"Avatar"} />
+        <img
+          src={user?.image || "/images/placeholder.jpg"}
+          alt={"Avatar"}
+          className={"rounded-full bg-cover w-full h-full absolute"}
+        />
         {/*<Image*/}
         {/*  fill*/}
         {/*  src={user?.image || "/images/placeholder.jpg"}*/}
