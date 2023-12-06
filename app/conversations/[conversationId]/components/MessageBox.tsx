@@ -1,11 +1,12 @@
 "use client";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { FullMessageType } from "@/app/types";
 import { useSession } from "next-auth/react";
 import clsx from "clsx";
 import Avatar from "@/app/components/Avatar/Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
+import ImageModal from "@/app/conversations/[conversationId]/components/ImageModal";
 
 interface MessageBoxProps {
   data: FullMessageType;
@@ -13,6 +14,7 @@ interface MessageBoxProps {
 }
 
 const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
+  const [imageModalOpen, setImageModalOpen] = useState(false);
   const session = useSession();
   const isOwn = session?.data?.user?.email === data?.sender?.email;
   const seenList = (data.seen || [])
@@ -29,8 +31,6 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
     data.image ? "rounded-md p-0" : "rounded-full py-2 px-3",
   );
 
-  console.log("seenList", seenList);
-
   return (
     <div className={container}>
       <div className={avatar}>
@@ -44,8 +44,14 @@ const MessageBox: FC<MessageBoxProps> = ({ data, isLast }) => {
           </div>
         </div>
         <div className={message}>
+          <ImageModal
+            src={data.image}
+            isOpen={imageModalOpen}
+            onClose={() => setImageModalOpen(false)}
+          />
           {data.image ? (
             <img
+              onClick={() => setImageModalOpen(true)}
               alt={data.senderId}
               src={data.image}
               className={

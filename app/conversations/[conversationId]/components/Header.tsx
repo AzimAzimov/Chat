@@ -8,6 +8,7 @@ import Avatar from "@/app/components/Avatar/Avatar";
 import mobileFooter from "@/app/components/Sidebar/MobileFooter";
 import { HiEllipsisHorizontal, HiEllipsisVertical } from "react-icons/hi2";
 import ProfileDrawer from "@/app/conversations/[conversationId]/components/ProfileDrawer";
+import AvatarGroup from "@/app/components/Avatar/AvatarGroup";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -46,7 +47,11 @@ const Header: FC<HeaderProps> = ({ conversation }) => {
           >
             <HiChevronLeft size={32} />
           </Link>
-          <Avatar user={otherUser} />
+          {conversation.isGroup ? (
+            <AvatarGroup users={conversation.users} />
+          ) : (
+            <Avatar user={otherUser} />
+          )}
           <div className={"flex flex-col"}>
             <div className={""}>{conversation.name || otherUser.name}</div>
             <div className={"text-sm font-light text-neutral-500"}>

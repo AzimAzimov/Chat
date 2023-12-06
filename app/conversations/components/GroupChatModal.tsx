@@ -75,9 +75,9 @@ const GroupChatModal: FC<GroupChatModalProps> = ({
               />
               <Select
                 disabled={isLoading}
-                label={"Количество"}
+                label={"Пользователи"}
                 value={members}
-                onChange={(value: string) =>
+                onChange={(value: any) =>
                   setValue("members", value, {
                     shouldValidate: true,
                   })
@@ -92,7 +92,7 @@ const GroupChatModal: FC<GroupChatModalProps> = ({
           <div className={"mt-6 flex items-center justify-end gap-x-6"}>
             <Button disabled={isLoading} secondary onClick={onClose}>
               Отменить
-            </Button>{" "}
+            </Button>
             <Button disabled={isLoading} type={"submit"}>
               Сохранить
             </Button>
