@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import ToasterContext from "@/app/context/ToasterContext";
 import AuthContext from "@/app/context/AuthContext";
 import "./globals.scss";
+import ActiveStatus from "@/app/components/ActiveStatus/ActiveStatus";
 
 interface HomeProps {
   children: ReactNode;
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: HomeProps) {
       <body className={inter.className}>
         <AuthContext>
           <ToasterContext />
+          <ActiveStatus />
           {children}
         </AuthContext>
       </body>

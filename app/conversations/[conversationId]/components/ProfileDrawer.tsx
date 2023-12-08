@@ -10,6 +10,7 @@ import { IoMdMail } from "react-icons/io";
 import Modal from "@/app/components/Modal/Modal";
 import ConfirmModal from "@/app/conversations/[conversationId]/components/ConfirmModal";
 import AvatarGroup from "@/app/components/Avatar/AvatarGroup";
+import useActiveList from "@/app/hooks/useActiveList";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -21,6 +22,8 @@ interface ProfileDrawerProps {
 const ProfileDrawer: FC<ProfileDrawerProps> = ({ isOpen, onClose, data }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const otherUser = useOtherUser(data);
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
 
   const joinedDate = useMemo(() => {
     return format(new Date(otherUser.createdAt), "PP");
@@ -34,8 +37,8 @@ const ProfileDrawer: FC<ProfileDrawerProps> = ({ isOpen, onClose, data }) => {
     if (data.isGroup) {
       return `${data.users.length} Участники`;
     }
-    return "В сети";
-  }, [data]);
+    return isActive ? "В сети" : "Не в сети";
+  }, [data, isActive]);
 
   return (
     <>

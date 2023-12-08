@@ -9,6 +9,7 @@ import mobileFooter from "@/app/components/Sidebar/MobileFooter";
 import { HiEllipsisHorizontal, HiEllipsisVertical } from "react-icons/hi2";
 import ProfileDrawer from "@/app/conversations/[conversationId]/components/ProfileDrawer";
 import AvatarGroup from "@/app/components/Avatar/AvatarGroup";
+import useActiveList from "@/app/hooks/useActiveList";
 
 interface HeaderProps {
   conversation: Conversation & {
@@ -19,12 +20,15 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ conversation }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const otherUser = useOtherUser(conversation);
+  const { members } = useActiveList();
+  const isActive = members.indexOf(otherUser?.email!) !== -1;
+
   const statusText = useMemo(() => {
     if (conversation.isGroup) {
       return `${conversation.users.length} участники`;
     }
-    return "В сети";
-  }, [conversation]);
+    return isActive ? "В сети" : "Не в сети";
+  }, [conversation, isActive]);
 
   return (
     <>
