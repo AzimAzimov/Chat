@@ -23,6 +23,7 @@ const Body: FC<BodyProps> = ({ initialMessages }) => {
 
   useEffect(() => {
     pusherClient.subscribe(conversationId);
+    // @ts-ignore
     bottomRef?.current?.scrollIntoView();
 
     const messageHandler = (message: FullMessageType) => {
@@ -33,6 +34,7 @@ const Body: FC<BodyProps> = ({ initialMessages }) => {
         }
         return [...current, message];
       });
+      // @ts-ignore
       bottomRef?.current?.scrollIntoView();
     };
 
